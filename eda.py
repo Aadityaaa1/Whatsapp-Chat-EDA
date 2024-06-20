@@ -1,5 +1,5 @@
 import streamlit as st
-from collections import Counter
+from collections2 import Counter
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 from whatstk import WhatsAppChat
