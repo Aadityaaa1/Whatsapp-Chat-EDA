@@ -1,0 +1,7 @@
+streamlit
+collections
+wordcloud
+matplotlib
+whatstk
+pandas
+io
