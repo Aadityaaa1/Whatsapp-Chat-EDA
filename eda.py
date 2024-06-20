@@ -1,5 +1,5 @@
 import streamlit as st
-from collections2 import Counter
+from collections import Counter
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 from whatstk import WhatsAppChat
@@ -25,14 +25,30 @@ def generate_plots(chat):
 
     # Top 10 most used words (excluding specific words)
     all_messages = ' '.join(chat.df['message'].dropna().astype(str))
-    words_counter = Counter(all_messages.split())
+    words = all_messages.lower().split()
+
+    # Custom dictionary-like structure to manage word frequency counting
+    word_freq = {}
+
+    for word in exclude_words:
+        if word in word_freq:
+            del word_freq[word]
+
+    # Count the frequency of each word manually
+    for word in words:
+        if word in word_freq:
+            word_freq[word] += 1
+        else:
+            word_freq[word] = 1
 
     # Remove excluded words
     for word in exclude_words:
-        if word in words_counter:
-            del words_counter[word]
+        if word in word_freq:
+            del word_freq[word]
 
-    top_15_words = dict(words_counter.most_common(15))
+    # Sort and get the top 15 most common words manually
+    sorted_word_freq = sorted(word_freq.items(), key=lambda x: x[1], reverse=True)
+    top_15_words = dict(sorted_word_freq[:15])
 
     # Plotting WordCloud for the top 10 words
     wordcloud = WordCloud(width=800, height=400, background_color='white').generate_from_frequencies(top_15_words)
