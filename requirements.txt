@@ -4,4 +4,3 @@ wordcloud
 matplotlib
 whatstk
 pandas
-io
